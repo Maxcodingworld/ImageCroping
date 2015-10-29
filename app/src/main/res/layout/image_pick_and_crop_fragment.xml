@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000">
+
+    <LinearLayout
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:padding="4dp"
+        android:id="@+id/toolbox"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_marginRight="10dp"
+            android:src="@drawable/rotatelefticon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/rotateleftbutton" />
+
+        <ImageView
+            android:layout_marginRight="10dp"
+            android:src="@drawable/rotaterighticon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/rotaterightbutton" />
+
+        <ImageView
+            android:src="@drawable/cropicon"
+            android:id="@+id/crop_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+
+    </LinearLayout>
+
+    <com.isseiaoki.simplecropview.CropImageView
+        android:layout_below="@+id/toolbox"
+        android:id="@+id/cropImageView"
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        custom:cropMode="ratio_1_1"
+        custom:handleSize="7dp"
+        custom:touchPadding="10dp"
+        />
+
+</RelativeLayout>
