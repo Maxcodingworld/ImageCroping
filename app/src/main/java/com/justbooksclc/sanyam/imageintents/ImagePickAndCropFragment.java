@@ -15,9 +15,8 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import com.isseiaoki.simplecropview.CropImageView;
 
@@ -25,27 +24,25 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.io.SyncFailedException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
-/**
- * Created by sanyam on 28/10/15.
- */
 public class ImagePickAndCropFragment extends Fragment {
     private View view;
     private CropImageView cropImageView;
     private Bitmap original,croppedImage;
     private Context context;
-    private int GALLERY_FLAG = 0, CAMERA_FLAG = 1;
     private int flag = 0 ;
     private int ratioX = 100 , ratioY = 100;
     private OnImageCropFragment listener;
-    private String currenttimeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Timestamp(System.currentTimeMillis()));
+    private String currentTimeStamp;
     private Uri cameraUri;
     private int cropCircle =0;
 
+
+    public static int GALLERY_FLAG = 0, CAMERA_FLAG = 1;
+    public static int BUSINESS_COLOR = R.color.business_blue,CONSUMER_COLOR = R.color.consumer_orange;
+    public int color = R.color.business_blue;
     public void setIntentType(int type){
         if(type==0||type==1)
             flag = type;
@@ -60,9 +57,14 @@ public class ImagePickAndCropFragment extends Fragment {
         this.cropCircle = flag;
     }
 
+    public void setHandlerColor(int color){
+        this.color = color;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.image_pick_and_crop_fragment,container,false);
+        currentTimeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Timestamp(System.currentTimeMillis()));
+        view = inflater.inflate(R.layout.image_pick_and_crop_fragment, container, false);
         view.setVisibility(View.INVISIBLE);
         return view;
     }
@@ -72,9 +74,10 @@ public class ImagePickAndCropFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         final View fragView = getView();
-        cropImageView = (CropImageView)fragView.findViewById(R.id.cropImageView);
+        cropImageView = (CropImageView) fragView.findViewById(R.id.cropImageView);
         cropImageView.setHandleShowMode(CropImageView.ShowMode.SHOW_ON_TOUCH);
-        ImageView cropButton = (ImageView) fragView.findViewById(R.id.crop_button);
+        cropImageView.setHandleColor(context.getResources().getColor(this.color));
+        TextView cropButton = (TextView) fragView.findViewById(R.id.crop_button);
         ImageView rotaterightButton = (ImageView) fragView.findViewById(R.id.rotaterightbutton);
         ImageView rotateleftButton = (ImageView) fragView.findViewById(R.id.rotateleftbutton);
         cropImageView.setImageResource(R.drawable.image);
@@ -88,6 +91,8 @@ public class ImagePickAndCropFragment extends Fragment {
                 fragView.setVisibility(View.INVISIBLE);
             }
         });
+
+
         rotaterightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,7 +115,7 @@ public class ImagePickAndCropFragment extends Fragment {
         }else{
             intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             File imageFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                    , "fm_" + currenttimeStamp);
+                    , "fm_" + currentTimeStamp);
             cameraUri = Uri.fromFile(imageFile);
             System.out.println("cameraURI " + cameraUri.toString());
             intent.putExtra(MediaStore.EXTRA_OUTPUT,cameraUri);
@@ -219,4 +224,5 @@ public class ImagePickAndCropFragment extends Fragment {
             }
         }
     }
+
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="business_blue">#ff00c7b2</color>
+    <color name="consumer_orange">#FB8C00</color>
+
+    <color name="actionfrag_dark_grey">#4d4d4d</color>
+</resources>
